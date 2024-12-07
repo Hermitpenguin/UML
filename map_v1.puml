@@ -23,13 +23,6 @@ class Traders {
     + time_step(dt: int): void
 }
 
-class Predictor {
-    - predictor_type : int
-    + initialize(): void
-    + predict(): void
-    + time_step(dt: int): void
-}
-
 package StockMarket {
         class StockData {
         + tdpy: int
@@ -54,20 +47,25 @@ package StockMarket {
 }
 
 package Decision {
-    class Predictor
+    class Predictor {
+    - predictor_type : int
+    + initialize(): void
+    + predict(): void
+    + time_step(dt: int): void
+}
     class Advisor
     class DataAnalyst
 }
 
-StockMarket.StockExchange <-right-> StockMarket.StockData
-StockMarket.StockData --> Traders
-StockMarket.StockData --> Decision
-StockMarket.StockExchange --> Traders
-StockMarket.StockExchange <-- Traders
+StockMarket.StockExchange <--> StockMarket.StockData
+StockMarket.StockData -> Traders
+StockMarket.StockData -> Decision
+StockMarket.StockExchange -> Traders
+StockMarket.StockExchange <- Traders
 Company --> Decision
 Decision --> Traders
-Decision.Predictor <-right-> Decision.Advisor
-Decision.Predictor <-up-> Decision.DataAnalyst
+Decision.Predictor <--> Decision.Advisor
+Decision.Predictor <--> Decision.DataAnalyst
 Decision.Advisor <-> Decision.DataAnalyst
 
 
