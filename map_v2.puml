@@ -1,0 +1,72 @@
+@startuml
+scale max 800*800
+class Company {
+    - tdpy: int
+    - ticker: string
+    - market_cap: float
+    - nb_shares: float
+    - stock_price: float
+    - growth: float
+    + Company(ticker: string = "", init_market_cap: float = 0.0,
+              init_nb_shares: float = 1.0, init_growth: float = 0.0,
+              tdpy: int = 252)
+    + time_step(dt: int): void
+}
+
+class Traders {
+    - funds: int
+    - status: string
+    + initialize(): void
+    + pre_buy(amounts: list[int]): void
+    + order(): void
+    + sell_all(): void
+    + time_step(dt: int): void
+}
+
+package StockMarket {
+        class StockData {
+        + tdpy: int
+        - company_list: list<Company>
+        - trader_list: list<DumbTrader>
+        - predictor_list: list<Predictor>
+        + time: int
+        - historical_data: ndarray
+        - historical_time: ndarray
+        + initialize(): void
+        + time_step(dt: int): void
+        }
+
+        class StockExchange
+        {
+        - transaction_list: list<Transaction>
+        - time: int
+        - historical_transactions: ndarray
+        + initialize(): void
+        + time_step(dt: int): void
+    }
+}
+
+package Decision {
+    class Predictor {
+    - predictor_type : int
+    + initialize(): void
+    + predict(): void
+    + time_step(dt: int): void
+}
+    class Advisor
+    class DataAnalyst
+}
+
+StockMarket.StockExchange <--> StockMarket.StockData
+StockMarket.StockData -> Traders
+StockMarket.StockData -> Decision
+StockMarket.StockExchange -> Traders
+StockMarket.StockExchange <- Traders
+Company --> Decision
+Decision --> Traders
+Decision.Predictor <--> Decision.Advisor
+Decision.Predictor <--> Decision.DataAnalyst
+Decision.Advisor <-> Decision.DataAnalyst
+
+
+@enduml
