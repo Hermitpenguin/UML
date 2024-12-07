@@ -7,9 +7,6 @@ class Company {
     - nb_shares: float
     - stock_price: float
     - growth: float
-    + Company(ticker: string = "", init_market_cap: float = 0.0,
-              init_nb_shares: float = 1.0, init_growth: float = 0.0,
-              tdpy: int = 252)
     + time_step(dt: int): void
 }
 
